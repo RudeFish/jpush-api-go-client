@@ -11,6 +11,7 @@ type AndroidNotice struct {
 	Alert     string                 `json:"alert"`
 	Title     string                 `json:"title,omitempty"`
 	BuilderId int                    `json:"builder_id,omitempty"`
+	ShowBeginTime string                    `json:"show_begin_time,omitempty"`
 	Extras    map[string]interface{} `json:"extras,omitempty"`
 }
 
@@ -21,6 +22,7 @@ type IOSNotice struct {
 	ContentAvailable bool                   `json:"content-available,omitempty"`
 	MutableContent   bool                   `json:"mutable-content,omitempty"`
 	Category         string                 `json:"category,omitempty"`
+	ShowBeginTime string                    `json:"show_begin_time,omitempty"`
 	Extras           map[string]interface{} `json:"extras,omitempty"`
 }
 
