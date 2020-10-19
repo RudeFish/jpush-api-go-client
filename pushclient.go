@@ -11,6 +11,7 @@ import (
 const (
 	SUCCESS_FLAG  = "msg_id"
 	HOST_NAME_SSL = "https://api.jpush.cn/v3/push"
+	UPLOAD_NAME_SSL = "https://api.jpush.cn/v3/files/registration_id"
 	HOST_SCHEDULE = "https://api.jpush.cn/v3/schedules"
 	HOST_REPORT   = "https://report.jpush.cn/v3/received"
 	BASE64_TABLE  = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"
@@ -131,4 +132,33 @@ func (this *PushClient) SendGetScheduleRequest(schedule_id string, url string) (
 		return "", err
 	}
 	return rsp, nil
+}
+
+func NewUploadClientFile(secret, appKey string) *PushClient {
+	//base64
+	auth := "Basic " + base64Coder.EncodeToString([]byte(appKey+":"+secret))
+	pusher := &PushClient{secret, appKey, auth, HOST_NAME_SSL + "/file/registration_id"}
+	return pusher
+}
+
+func (this *PushClient)NewPushClientFile() *PushClient {
+	this.BaseUrl = HOST_NAME_SSL + "/file"
+	return this
+}
+
+func (this *PushClient) SendFile(data []byte) (string, error) {
+	return this.SendPushBytesFile(data)
+}
+
+func (this *PushClient) SendPushBytesFile(content []byte) (string, error) {
+	//ret, err := SendPostBytes(this.BaseUrl, content, this.AuthCode)
+	ret, err := SendPostBytes2(this.BaseUrl, content, this.AuthCode)
+	if err != nil {
+		return ret, err
+	}
+	if strings.Contains(ret, "msg_id") {
+		return ret, nil
+	} else {
+		return "", errors.New(ret)
+	}
 }

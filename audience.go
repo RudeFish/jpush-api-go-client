@@ -1,5 +1,7 @@
 package jpushclient
 
+import "encoding/json"
+
 const (
 	TAG     = "tag"
 	TAG_AND = "tag_and"
@@ -9,7 +11,7 @@ const (
 
 type Audience struct {
 	Object   interface{}
-	audience map[string][]string
+	audience map[string]interface{}
 }
 
 func (this *Audience) All() {
@@ -34,7 +36,7 @@ func (this *Audience) SetAlias(alias []string) {
 
 func (this *Audience) set(key string, v []string) {
 	if this.audience == nil {
-		this.audience = make(map[string][]string)
+		this.audience = make(map[string]interface{})
 		this.Object = this.audience
 	}
 
@@ -43,4 +45,22 @@ func (this *Audience) set(key string, v []string) {
 	//	return
 	//}
 	this.audience[key] = v
+}
+
+
+type fileTmp struct {
+	FileId string `json:"file_id"`
+}
+
+func (this *Audience) SetFile(id string) {
+	if this.audience == nil {
+		this.audience = make(map[string]interface{})
+		this.Object = this.audience
+	}
+	val := make(map[string]interface{})
+	val["file_id"] = id
+	var tmp fileTmp
+	mjson,_ :=json.Marshal(val)
+	json.Unmarshal(mjson, &tmp)
+	this.audience["file"] = tmp
 }
