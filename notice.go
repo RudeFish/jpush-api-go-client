@@ -22,7 +22,6 @@ type IOSNotice struct {
 	ContentAvailable bool                   `json:"content-available,omitempty"`
 	MutableContent   bool                   `json:"mutable-content,omitempty"`
 	Category         string                 `json:"category,omitempty"`
-	ShowBeginTime string                    `json:"show_begin_time,omitempty"`
 	Extras           map[string]interface{} `json:"extras,omitempty"`
 }
 
