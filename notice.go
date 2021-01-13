@@ -8,7 +8,7 @@ type Notice struct {
 }
 
 type AndroidNotice struct {
-	Alert     string                 `json:"alert"`
+	Alert     interface{}                 `json:"alert"`
 	Title     string                 `json:"title,omitempty"`
 	BuilderId int                    `json:"builder_id,omitempty"`
 	ShowBeginTime string                    `json:"show_begin_time,omitempty"`
